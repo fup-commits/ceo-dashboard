@@ -327,7 +327,7 @@ footer .section {
 /* 높이 안정화 */
 .today,
 .news {
-  min-height: 320px;
+  min-height: 300px;
 }
 
 .checklist {
@@ -346,12 +346,9 @@ footer .section {
 @media (max-width: 768px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "today"
-      "checklist"
-      "yesterday"
-      "calendar"
-      "news";
+grid-template-areas:
+  "today checklist yesterday"
+  "news  news      calendar";
 }
     .news-header {
   display: flex;
