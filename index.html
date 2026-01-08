@@ -231,14 +231,42 @@ footer {
   width: 100%;
   box-sizing: border-box;
 }
-    /* MAIL FULL-BLEED */
+/* MAIL MATRIX LAYOUT */
 .mail-section {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  box-sizing: border-box;
-  padding-left: 20px;
-  padding-right: 20px;
+  margin-bottom: 40px;
+}
+
+.mail-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.mail-box {
+  border: 1px solid #e5e5e5;
+  padding: 12px 14px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mail-box h3 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111;
+}
+
+.mail-list {
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.mail-list small {
+  color: #999;
 }
 </style>
 </head>
@@ -259,28 +287,36 @@ footer {
 </header>
 
 
-<!-- MAIL (FULL WIDTH) -->
+<!-- MAIL MATRIX -->
 <div class="section mail-section">
-  <div class="mail-header">
-    <h2>MAIL</h2>
-    <div class="mail-actions">
-      <button id="mailToggle">접기</button>
-      <button id="mailRefresh">새로고침</button>
-    </div>
-  </div>
+  <h2>MAIL</h2>
 
-  <div id="mailContent">
-    <div class="mail-columns">
-      <div class="mail-group">
-        <h3>Gmail · 개인</h3>
-        <div id="mail_gmail_personal"></div>
-      </div>
+  <div class="mail-matrix">
 
-      <div class="mail-group">
-        <h3>Gmail · 회사</h3>
-        <div id="mail_gmail_company"></div>
+    <div class="mail-box">
+      <h3>업무 지메일</h3>
+      <div id="mail_gmail_company" class="mail-list"></div>
+    </div>
+
+    <div class="mail-box">
+      <h3>개인 지메일</h3>
+      <div id="mail_gmail_personal" class="mail-list"></div>
+    </div>
+
+    <div class="mail-box">
+      <h3>업무 네이버</h3>
+      <div id="mail_naver_company" class="mail-list">
+        <small>지메일 전달 예정</small>
       </div>
     </div>
+
+    <div class="mail-box">
+      <h3>개인 네이버</h3>
+      <div id="mail_naver_personal" class="mail-list">
+        <small>지메일 전달 예정</small>
+      </div>
+    </div>
+
   </div>
 </div>
 
