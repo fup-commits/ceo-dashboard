@@ -150,7 +150,7 @@ small {
     <!-- MAIL -->
 <div class="section">
   <h2>MAIL</h2>
-  <div id="mailList" class="list">불러오는 중…</div>
+  <div id="mailList"></div>
 </div>
 
     <!-- TODAY TASKS -->
@@ -317,9 +317,8 @@ function unlock() {
 if (localStorage.getItem('ceo_unlocked') === 'true') {
   document.getElementById('lockScreen').style.display = 'none';
 }
-</script>
-    <script>
-const MAIL_API = 'https://script.google.com/macros/s/AKfycbyXlpoE7c6MGH-uzEBwsTzoEVZf_GNBvJGe-gSRBk_uaZdl6TIDpglDqS6uamBQ5XAQ/exec';
+<script>
+const MAIL_API = 'https://script.google.com/macros/s/AKfycbyXlpoE7c6MGH-uZEbwsTzoEVZf_GNBvJ6e-gSRBk_uazd16TIDpgDqS6uamBQ5XAQ/exec';
 
 fetch(MAIL_API)
   .then(res => res.json())
@@ -327,9 +326,20 @@ fetch(MAIL_API)
     const box = document.getElementById('mailList');
     box.innerHTML = '';
 
-    data.forEach(mail => {
+    data.slice(0, 8).forEach(mail => {
       const row = document.createElement('div');
-      row.textContent = `- ${mail.from} | ${mail.subject} (${mail.time})`;
+      row.style.marginBottom = '6px';
+
+      const from = mail.from.split('<')[0].replace(/"/g, '').trim();
+      const subject =
+        mail.subject.length > 40
+          ? mail.subject.slice(0, 40) + '…'
+          : mail.subject;
+
+      row.innerHTML = `
+        <strong>${from}</strong><br/>
+        <span style="color:#555">${subject}</span>
+      `;
       box.appendChild(row);
     });
 
