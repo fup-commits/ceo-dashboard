@@ -396,9 +396,12 @@ function renderMail(api) {
 
         const row = document.createElement('div');
         row.style.marginBottom = '8px';
-        row.innerHTML = `
-          <strong>${from}</strong><br/>
-          <span style="color:#555">${subject}</span>
+         row.innerHTML = `
+          <strong>${fromName}${naverLabel}</strong><br/>
+          <a href="${mail.link}" target="_blank"
+             style="color:#555; text-decoration:none;">
+             ${subject}
+          </a>
         `;
         box.appendChild(row);
       });
