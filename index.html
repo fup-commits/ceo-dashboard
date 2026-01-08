@@ -6,232 +6,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
+/* =====================
+   BASE
+===================== */
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-    background: #ffffff;
-    color: #111;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  background: #ffffff;
+  color: #111;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e5e5e5;
-    padding-bottom: 16px;
-    margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 header h1 {
-    font-size: 18px;
-    font-weight: 600;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 header span {
-    font-size: 14px;
-    color: #666;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    gap: 24px;
+  font-size: 14px;
+  color: #666;
 }
 
 .section {
-    border: 1px solid #eaeaea;
-    padding: 16px;
+  border: 1px solid #eaeaea;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .section h2 {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.list, .news {
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-input[type="text"] {
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid #ddd;
-    padding: 6px 0;
-    font-size: 13px;
-    margin-bottom: 8px;
-}
-
-input[type="checkbox"] {
-    margin-right: 8px;
-}
-
-.todo-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 6px;
-}
-
-.calendar {
-    margin-top: 24px;
-}
-
-footer {
-    margin-top: 24px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-}
-
-small {
-    color: #999;
-}
-    #lockScreen {
-  position: fixed;
-  inset: 0;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.lock-box {
-  text-align: center;
-  border: 1px solid #e5e5e5;
-  padding: 40px;
-}
-
-.lock-box h2 {
-  margin-bottom: 20px;
-  font-size: 18px;
-}
-
-.lock-box input {
-  width: 160px;
-  padding: 8px;
   font-size: 14px;
-  text-align: center;
+  font-weight: 600;
   margin-bottom: 12px;
 }
 
-.lock-box button {
-  padding: 6px 14px;
-  font-size: 13px;
-  cursor: pointer;
-}
- .mail-group {
-  margin-bottom: 16px;
-}
-
-.mail-group h3 {
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #333;
-}
-    /* =====================
-   MOBILE OPTIMIZATION
+/* =====================
+   MAIL MATRIX
 ===================== */
-@media (max-width: 768px) {
-
-  /* 전체 여백 줄이기 */
-  .container {
-    margin: 20px auto;
-    padding: 0 12px;
-  }
-
-  /* MAIL 가로 → 세로 */
-  .mail-columns {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  /* MAIL 버튼 터치 영역 확대 */
-  .mail-actions button {
-    padding: 6px 12px;
-    font-size: 13px;
-  }
-
-  /* GRID 전체 세로 스택 */
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* 섹션 간 간격 정리 */
-  .section {
-    margin-bottom: 16px;
-  }
-
-  /* 헤더 줄 정리 */
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
-
-  header h1 {
-    font-size: 17px;
-  }
-
-  header span {
-    font-size: 13px;
-  }
-}
-    /* =====================
-   LAYOUT BALANCE FIX
-===================== */
-
-/* MAIL 전체 섹션 안정화 */
-.mail-section {
-  margin-bottom: 40px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-/* MAIL 내부 콘텐츠 높이 제한 */
-#mailContent {
-  max-height: 360px;
-  overflow-y: auto;
-  padding-right: 8px;
-}
-
-/* MAIL 컬럼 간 균형 */
-.mail-columns {
-  align-items: flex-start;
-}
-
-/* GRID 섹션 간 시각적 통일 */
-.grid {
-  margin-top: 24px;
-}
-
-/* GRID 안 섹션 높이 균형 */
-.grid .section {
-  min-height: 260px;
-}
-
-/* TODAY / YESTERDAY / CALENDAR 정렬 안정화 */
-.section h2 {
-  margin-bottom: 16px;
-}
-
-/* CHECK LIST, NEWS 정리 */
-footer {
-  margin-top: 32px;
-}
-    .mail-section {
-  width: 100%;
-  box-sizing: border-box;
-}
-/* MAIL MATRIX LAYOUT */
 .mail-section {
   margin-bottom: 40px;
 }
@@ -240,7 +64,6 @@ footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
-  margin-top: 16px;
 }
 
 .mail-box {
@@ -255,7 +78,6 @@ footer {
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #111;
 }
 
 .mail-list {
@@ -265,56 +87,16 @@ footer {
   flex: 1;
 }
 
-.mail-list small {
-  color: #999;
-}
-    /* =====================
-   GRID STABILIZE FIX
+/* =====================
+   DASHBOARD GRID (핵심)
 ===================== */
-
-/* 상단 업무 그리드 (TODAY / YESTERDAY / CALENDAR) */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 24px;
-  margin-top: 32px;
-}
-
-/* 하단 그리드 (CHECK LIST / NEWS) */
-footer {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-top: 32px;
-}
-
-/* 그리드 안 섹션 최소 폭 보장 */
-.grid .section,
-footer .section {
-  min-width: 0;
-}
-
-/* 모바일 대응 */
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  footer {
-    grid-template-columns: 1fr;
-  }
-}
-    /* =====================
-   CEO DASHBOARD LAYOUT
-===================== */
-
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1.1fr 1.6fr 1.1fr;
   grid-template-areas:
     "today checklist yesterday"
-    "news  checklist calendar";
+    "news  news      calendar";
   gap: 24px;
-  margin-top: 32px;
 }
 
 /* 영역 매핑 */
@@ -324,33 +106,16 @@ footer .section {
 .news { grid-area: news; }
 .calendar-box { grid-area: calendar; }
 
-/* 높이 안정화 */
-.today,
-.news {
-  min-height: 300px;
-}
+/* 높이 기준 */
+.today, .news { min-height: 300px; }
+.checklist { min-height: 520px; }
+.yesterday { min-height: 240px; }
+.calendar-box { min-height: 300px; }
 
-.checklist {
-  min-height: 520px;
-}
-
-.yesterday {
-  min-height: 240px;
-}
-
-.calendar-box {
-  min-height: 300px;
-}
-
-/* 모바일 */
-@media (max-width: 768px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-grid-template-areas:
-  "today checklist yesterday"
-  "news  news      calendar";
-}
-    .news-header {
+/* =====================
+   NEWS
+===================== */
+.news-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -370,59 +135,75 @@ grid-template-areas:
   color: #999;
   margin-bottom: 10px;
 }
+
+/* =====================
+   MOBILE
+===================== */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px auto;
+    padding: 0 12px;
+  }
+
+  .mail-matrix {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "today"
+      "checklist"
+      "yesterday"
+      "calendar"
+      "news";
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
 </style>
 </head>
 
 <body>
-    <div id="lockScreen">
-  <div class="lock-box">
-    <h2>CEO Dashboard</h2>
-    <input type="password" id="pinInput" placeholder="PIN 입력" />
-    <button onclick="unlock()">확인</button>
-  </div>
-</div>
 <div class="container">
 
 <header>
-    <h1>CEO Dashboard</h1>
-    <span id="today"></span>
+  <h1>CEO Dashboard</h1>
+  <span id="today"></span>
 </header>
 
-
-<!-- MAIL MATRIX -->
+<!-- MAIL -->
 <div class="section mail-section">
   <h2>MAIL</h2>
-
   <div class="mail-matrix">
-
     <div class="mail-box">
       <h3>업무 지메일</h3>
       <div id="mail_gmail_company" class="mail-list"></div>
     </div>
-
     <div class="mail-box">
       <h3>개인 지메일</h3>
       <div id="mail_gmail_personal" class="mail-list"></div>
     </div>
-
     <div class="mail-box">
       <h3>업무 네이버</h3>
       <div id="mail_naver_company" class="mail-list">
         <small>지메일 전달 예정</small>
       </div>
     </div>
-
     <div class="mail-box">
       <h3>개인 네이버</h3>
       <div id="mail_naver_personal" class="mail-list">
         <small>지메일 전달 예정</small>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- DASHBOARD GRID -->
+<!-- DASHBOARD -->
 <div class="dashboard-grid">
 
   <div class="section today">
@@ -439,31 +220,27 @@ grid-template-areas:
 
   <div class="section yesterday">
     <h2>YESTERDAY</h2>
-    <div id="yesterdayTasks" class="list"></div>
+    <div id="yesterdayTasks"></div>
   </div>
 
-<div class="section news">
-  <div class="news-header">
-    <h2>ECONOMIC NEWS</h2>
-    <button id="newsRefresh">새로고침</button>
+  <div class="section news">
+    <div class="news-header">
+      <h2>ECONOMIC NEWS</h2>
+      <button id="newsRefresh">새로고침</button>
+    </div>
+    <div class="news-meta">
+      마지막 업데이트: <span id="newsUpdated">-</span>
+    </div>
+    <strong>에프유피글로벌파트너스</strong>
+    <div id="news_fup"></div>
+    <br/>
+    <strong>와이낫글로벌이니셔티브</strong>
+    <div id="news_whynot"></div>
   </div>
-
-  <div class="news-meta">
-    마지막 업데이트: <span id="newsUpdated">-</span>
-  </div>
-
-  <strong>에프유피글로벌파트너스</strong>
-  <div id="news_fup"></div>
-
-  <br/>
-
-  <strong>와이낫글로벌이니셔티브</strong>
-  <div id="news_whynot"></div>
-</div>
 
   <div class="section calendar-box">
     <h2>CALENDAR</h2>
-    <div class="list">
+    <div>
       09:00 내부 미팅<br/>
       13:00 외부 미팅<br/>
       16:30 전화 미팅
@@ -472,12 +249,9 @@ grid-template-areas:
 
 </div>
 
-</footer>
-
 <small>Private · CEO Only</small>
 
 </div>
-
 <script>
 /* =====================
    GLOBAL
