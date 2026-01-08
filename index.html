@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>CEO Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    background: #ffffff;
+    color: #111;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}
+
+header h1 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+header span {
+    font-size: 14px;
+    color: #666;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 24px;
+}
+
+.section {
+    border: 1px solid #eaeaea;
+    padding: 16px;
+}
+
+.section h2 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.list, .news {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+input[type="text"] {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 0;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.calendar {
+    margin-top: 24px;
+}
+
+footer {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+small {
+    color: #999;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+    <h1>CEO Dashboard</h1>
+    <span id="today"></span>
+</header>
+
+<div class="grid">
+
+    <!-- MAIL -->
+    <div class="section">
+        <h2>MAIL</h2>
+        <div class="list">
+            Personal : 12<br/>
+            Company : 4
+        </div>
+    </div>
+
+    <!-- TODAY TASKS -->
+    <div class="section">
+        <h2>TODAY TASKS</h2>
+
+        <div class="todo-item">
+            <input type="checkbox" />
+            <span>투자사 메일 회신</span>
+        </div>
+        <div class="todo-item">
+            <input type="checkbox" />
+            <span>내부 결재 확인</span>
+        </div>
+        <div class="todo-item">
+            <input type="checkbox" />
+            <span>미팅 정리</span>
+        </div>
+    </div>
+
+    <!-- YESTERDAY -->
+    <div class="section">
+        <h2>YESTERDAY</h2>
+        <div class="list">
+            • IR 자료 검토<br/>
+            • 디자인 피드백
+        </div>
+    </div>
+
+</div>
+
+<!-- CALENDAR -->
+<div class="section calendar">
+    <h2>CALENDAR</h2>
+    <div class="list">
+        09:00 내부 미팅<br/>
+        13:00 외부 미팅<br/>
+        16:30 전화 미팅
+    </div>
+</div>
+
+<footer>
+
+    <!-- CHECK LIST -->
+    <div class="section">
+        <h2>CHECK LIST</h2>
+        <div class="todo-item">
+            <input type="checkbox" />
+            <span>메일 전체 확인</span>
+        </div>
+        <div class="todo-item">
+            <input type="checkbox" />
+            <span>일정 정리</span>
+        </div>
+        <div class="todo-item">
+            <input type="checkbox" />
+            <span>보고 메모 작성</span>
+        </div>
+    </div>
+
+    <!-- NEWS -->
+    <div class="section">
+        <h2>ECONOMIC NEWS</h2>
+        <div class="news">
+            • 미 연준 금리 동결<br/>
+            • 원·달러 환율 변동<br/>
+            • 글로벌 증시 혼조
+        </div>
+    </div>
+
+</footer>
+
+<small>Private · CEO Only</small>
+
+</div>
+
+<script>
+const today = new Date();
+const options = { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short' };
+document.getElementById("today").innerText = today.toLocaleDateString('ko-KR', options);
+</script>
+
+</body>
+</html>
