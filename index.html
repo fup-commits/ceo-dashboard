@@ -116,22 +116,11 @@ small {
     </div>
 
     <!-- TODAY TASKS -->
-    <div class="section">
-        <h2>TODAY TASKS</h2>
-
-        <div class="todo-item">
-            <input type="checkbox" />
-            <span>투자사 메일 회신</span>
-        </div>
-        <div class="todo-item">
-            <input type="checkbox" />
-            <span>내부 결재 확인</span>
-        </div>
-        <div class="todo-item">
-            <input type="checkbox" />
-            <span>미팅 정리</span>
-        </div>
-    </div>
+<div class="section">
+  <h2>TODAY TASKS</h2>
+  <div id="todayTasks"></div>
+  <input type="text" id="newTodayTask" placeholder="업무 추가 후 Enter" />
+</div>
 
     <!-- YESTERDAY -->
     <div class="section">
@@ -157,21 +146,11 @@ small {
 <footer>
 
     <!-- CHECK LIST -->
-    <div class="section">
-        <h2>CHECK LIST</h2>
-        <div class="todo-item">
-            <input type="checkbox" />
-            <span>메일 전체 확인</span>
-        </div>
-        <div class="todo-item">
-            <input type="checkbox" />
-            <span>일정 정리</span>
-        </div>
-        <div class="todo-item">
-            <input type="checkbox" />
-            <span>보고 메모 작성</span>
-        </div>
-    </div>
+<div class="section">
+  <h2>CHECK LIST</h2>
+  <div id="checkList"></div>
+  <input type="text" id="newCheckItem" placeholder="체크 항목 추가 후 Enter" />
+</div>
 
     <!-- NEWS -->
     <div class="section">
@@ -190,21 +169,78 @@ small {
 </div>
 
 <script>
-const today = new Date();
-const options = { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short' };
+const today = new Date().toISOString().slice(0,10);
 document.getElementById("today").innerText =
-  today.toLocaleDateString('ko-KR', options);
-
-// 체크박스 저장
-const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-checkboxes.forEach((checkbox, index) => {
-  const saved = localStorage.getItem('checkbox_' + index);
-  if (saved === 'true') checkbox.checked = true;
-
-  checkbox.addEventListener('change', () => {
-    localStorage.setItem('checkbox_' + index, checkbox.checked);
+  new Date().toLocaleDateString('ko-KR', {
+    year:'numeric', month:'2-digit', day:'2-digit', weekday:'short'
   });
+
+// 공통 렌더 함수
+function renderList(key, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  const items = JSON.parse(localStorage.getItem(key) || '[]');
+
+  items.forEach((item, index) => {
+    const row = document.createElement('div');
+    row.className = 'todo-item';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = item.done;
+
+    checkbox.onchange = () => {
+      items[index].done = checkbox.checked;
+      localStorage.setItem(key, JSON.stringify(items));
+    };
+
+    const text = document.createElement('span');
+    text.textContent = item.text;
+    if (item.done) text.style.color = '#aaa';
+
+    const del = document.createElement('span');
+    del.textContent = ' ×';
+    del.style.cursor = 'pointer';
+    del.style.color = '#ccc';
+    del.onclick = () => {
+      items.splice(index, 1);
+      localStorage.setItem(key, JSON.stringify(items));
+      renderList(key, containerId);
+    };
+
+    row.appendChild(checkbox);
+    row.appendChild(text);
+    row.appendChild(del);
+    container.appendChild(row);
+  });
+}
+
+// TODAY TASKS
+const todayKey = 'todayTasks_' + today;
+renderList(todayKey, 'todayTasks');
+
+document.getElementById('newTodayTask').addEventListener('keypress', e => {
+  if (e.key === 'Enter' && e.target.value.trim()) {
+    const items = JSON.parse(localStorage.getItem(todayKey) || '[]');
+    items.push({ text: e.target.value, done: false });
+    localStorage.setItem(todayKey, JSON.stringify(items));
+    e.target.value = '';
+    renderList(todayKey, 'todayTasks');
+  }
+});
+
+// CHECK LIST
+const checkKey = 'checkList';
+renderList(checkKey, 'checkList');
+
+document.getElementById('newCheckItem').addEventListener('keypress', e => {
+  if (e.key === 'Enter' && e.target.value.trim()) {
+    const items = JSON.parse(localStorage.getItem(checkKey) || '[]');
+    items.push({ text: e.target.value, done: false });
+    localStorage.setItem(checkKey, JSON.stringify(items));
+    e.target.value = '';
+    renderList(checkKey, 'checkList');
+  }
 });
 </script>
 
