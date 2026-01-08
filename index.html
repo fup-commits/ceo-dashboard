@@ -227,6 +227,10 @@ small {
 footer {
   margin-top: 32px;
 }
+    .mail-section {
+  width: 100%;
+  box-sizing: border-box;
+}
 </style>
 </head>
 
@@ -540,6 +544,29 @@ if (localStorage.getItem('ceo_unlocked') === 'true') {
   renderMail(MAIL_APIS.gmail_company);
     }
 });
+    // MAIL 접기 / 펼치기
+const mailToggleBtn = document.getElementById('mailToggle');
+const mailContent = document.getElementById('mailContent');
+
+let mailOpened = true;
+
+if (mailToggleBtn && mailContent) {
+  mailToggleBtn.addEventListener('click', () => {
+    mailOpened = !mailOpened;
+    mailContent.style.display = mailOpened ? 'block' : 'none';
+    mailToggleBtn.textContent = mailOpened ? '접기' : '펼치기';
+  });
+}
+
+// MAIL 새로고침
+const mailRefreshBtn = document.getElementById('mailRefresh');
+
+if (mailRefreshBtn) {
+  mailRefreshBtn.addEventListener('click', () => {
+    renderMail(MAIL_APIS.gmail_personal);
+    renderMail(MAIL_APIS.gmail_company);
+  });
+}
 </script>
 </body>
 </html>
