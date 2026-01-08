@@ -203,33 +203,35 @@ small {
     <span id="today"></span>
 </header>
 
-<div class="grid">
 
-    <!-- MAIL -->
-<div class="section">
-  <h2>MAIL</h2>
-
-  <div class="mail-group">
-    <h3>Gmail · 개인</h3>
-    <div id="mail_gmail_personal">불러오는 중…</div>
+<!-- MAIL (FULL WIDTH) -->
+<div class="section mail-section">
+  <div class="mail-header">
+    <h2>MAIL</h2>
+    <div class="mail-actions">
+      <button id="mailToggle">접기</button>
+      <button id="mailRefresh">새로고침</button>
+    </div>
   </div>
 
-  <div class="mail-group">
-    <h3>Gmail · 회사</h3>
-    <div id="mail_gmail_company">불러오는 중…</div>
-  </div>
+  <div id="mailContent">
+    <div class="mail-columns">
+      <div class="mail-group">
+        <h3>Gmail · 개인</h3>
+        <div id="mail_gmail_personal"></div>
+      </div>
 
-  <div class="mail-group">
-    <h3>네이버 · 개인</h3>
-    <div id="mail_naver_personal">불러오는 중…</div>
-  </div>
-
-  <div class="mail-group">
-    <h3>네이버 · 회사</h3>
-    <div id="mail_naver_company">불러오는 중…</div>
+      <div class="mail-group">
+        <h3>Gmail · 회사</h3>
+        <div id="mail_gmail_company"></div>
+      </div>
+    </div>
   </div>
 </div>
 
+<div class="grid">
+  <!-- TODAY / YESTERDAY / CALENDAR -->
+<div class="grid">
     <!-- TODAY TASKS -->
 <div class="section">
   <h2>TODAY TASKS</h2>
