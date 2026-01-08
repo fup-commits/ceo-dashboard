@@ -268,6 +268,41 @@ footer {
 .mail-list small {
   color: #999;
 }
+    /* =====================
+   GRID STABILIZE FIX
+===================== */
+
+/* 상단 업무 그리드 (TODAY / YESTERDAY / CALENDAR) */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+/* 하단 그리드 (CHECK LIST / NEWS) */
+footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+/* 그리드 안 섹션 최소 폭 보장 */
+.grid .section,
+footer .section {
+  min-width: 0;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  footer {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 
