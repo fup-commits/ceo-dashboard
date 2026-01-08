@@ -352,7 +352,26 @@ footer .section {
       "yesterday"
       "calendar"
       "news";
-  }
+}
+    .news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.news-header button {
+  font-size: 12px;
+  padding: 4px 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+}
+
+.news-meta {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 10px;
 }
 </style>
 </head>
@@ -427,15 +446,22 @@ footer .section {
   </div>
 
 <div class="section news">
-  <h2>ECONOMIC NEWS</h2>
+  <div class="news-header">
+    <h2>ECONOMIC NEWS</h2>
+    <button id="newsRefresh">새로고침</button>
+  </div>
+
+  <div class="news-meta">
+    마지막 업데이트: <span id="newsUpdated">-</span>
+  </div>
 
   <strong>에프유피글로벌파트너스</strong>
-  <ul id="news_fup"></ul>
+  <div id="news_fup"></div>
 
   <br/>
 
   <strong>와이낫글로벌이니셔티브</strong>
-  <ul id="news_whynot"></ul>
+  <div id="news_whynot"></div>
 </div>
 
   <div class="section calendar-box">
@@ -757,6 +783,27 @@ document.addEventListener('DOMContentLoaded', () => {
   loadNews(FUP_NEWS_API, 'news_fup');
   loadNews(WHYNOT_NEWS_API, 'news_whynot');
 });
+    function updateNewsTime() {
+  const now = new Date();
+  const timeText = now.toLocaleTimeString('ko-KR', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  document.getElementById('newsUpdated').innerText = timeText;
+}
+
+// 최초 로드 시 시간 표시
+updateNewsTime();
+
+// 새로고침 버튼
+const newsRefreshBtn = document.getElementById('newsRefresh');
+if (newsRefreshBtn) {
+  newsRefreshBtn.addEventListener('click', () => {
+    loadNews(FUP_NEWS_API, 'news_fup');
+    loadNews(WHYNOT_NEWS_API, 'news_whynot');
+    updateNewsTime();
+  });
+}
 </script>
 </body>
 </html>
