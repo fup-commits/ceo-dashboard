@@ -127,6 +127,16 @@ small {
   font-size: 13px;
   cursor: pointer;
 }
+ .mail-group {
+  margin-bottom: 16px;
+}
+
+.mail-group h3 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
 </style>
 </head>
 
@@ -150,7 +160,26 @@ small {
     <!-- MAIL -->
 <div class="section">
   <h2>MAIL</h2>
-  <div id="mailList"></div>
+
+  <div class="mail-group">
+    <h3>Gmail · 개인</h3>
+    <div id="mail_gmail_personal">불러오는 중…</div>
+  </div>
+
+  <div class="mail-group">
+    <h3>Gmail · 회사</h3>
+    <div id="mail_gmail_company">불러오는 중…</div>
+  </div>
+
+  <div class="mail-group">
+    <h3>네이버 · 개인</h3>
+    <div id="mail_naver_personal">불러오는 중…</div>
+  </div>
+
+  <div class="mail-group">
+    <h3>네이버 · 회사</h3>
+    <div id="mail_naver_company">불러오는 중…</div>
+  </div>
 </div>
 
     <!-- TODAY TASKS -->
