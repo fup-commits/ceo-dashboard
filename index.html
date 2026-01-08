@@ -123,14 +123,9 @@ small {
 </div>
 
     <!-- YESTERDAY -->
-    <div class="section">
-        <h2>YESTERDAY</h2>
-        <div class="list">
-            • IR 자료 검토<br/>
-            • 디자인 피드백
-        </div>
-    </div>
-
+<div class="section">
+  <h2>YESTERDAY</h2>
+  <div id="yesterdayTasks" class="list"></div>
 </div>
 
 <!-- CALENDAR -->
@@ -243,6 +238,29 @@ document.getElementById('newCheckItem').addEventListener('keypress', e => {
   }
 });
 </script>
+<script>
+// 어제 날짜 계산
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+const yesterdayKey =
+  'todayTasks_' + yesterday.toISOString().slice(0,10);
 
+// 어제 업무 불러오기
+const yesterdayData = JSON.parse(
+  localStorage.getItem(yesterdayKey) || '[]'
+);
+
+const yesterdayContainer = document.getElementById('yesterdayTasks');
+
+if (yesterdayData.length === 0) {
+  yesterdayContainer.innerHTML = '• 기록 없음';
+} else {
+  yesterdayData.forEach(item => {
+    const row = document.createElement('div');
+    row.textContent = '• ' + item.text;
+    yesterdayContainer.appendChild(row);
+  });
+}
+</script>
 </body>
 </html>
