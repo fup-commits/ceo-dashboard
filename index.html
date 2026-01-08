@@ -192,7 +192,20 @@ small {
 <script>
 const today = new Date();
 const options = { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short' };
-document.getElementById("today").innerText = today.toLocaleDateString('ko-KR', options);
+document.getElementById("today").innerText =
+  today.toLocaleDateString('ko-KR', options);
+
+// 체크박스 저장
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+checkboxes.forEach((checkbox, index) => {
+  const saved = localStorage.getItem('checkbox_' + index);
+  if (saved === 'true') checkbox.checked = true;
+
+  checkbox.addEventListener('change', () => {
+    localStorage.setItem('checkbox_' + index, checkbox.checked);
+  });
+});
 </script>
 
 </body>
