@@ -696,21 +696,41 @@ if (mailRefreshBtn) {
     renderMail(MAIL_APIS.gmail_company);
   });
 }
-    function loadNews(apiUrl, targetId) {
+/* =====================
+   NEWS API
+===================== */
+
+const FUP_NEWS_API =
+  'https://api.rss2json.com/v1/api.json?rss_url=' +
+  encodeURIComponent(
+    'https://news.google.com/rss/search?q=에프유피글로벌파트너스&hl=ko&gl=KR&ceid=KR:ko'
+  );
+
+const WHYNOT_NEWS_API =
+  'https://api.rss2json.com/v1/api.json?rss_url=' +
+  encodeURIComponent(
+    'https://news.google.com/rss/search?q=와이낫글로벌이니셔티브&hl=ko&gl=KR&ceid=KR:ko'
+  );
+
+/* =====================
+   NEWS LOADER
+===================== */
+
+function loadNews(apiUrl, targetId) {
   fetch(apiUrl)
     .then(res => res.json())
     .then(data => {
-      const list = document.getElementById(targetId);
-      list.innerHTML = '';
+      const container = document.getElementById(targetId);
+      container.innerHTML = '';
 
       if (!data.items || data.items.length === 0) {
-        list.innerHTML = '<li>관련 뉴스 없음</li>';
+        container.innerHTML = '<div>관련 뉴스 없음</div>';
         return;
       }
 
       data.items.slice(0, 3).forEach(item => {
-        const li = document.createElement('li');
-        li.style.marginBottom = '6px';
+        const div = document.createElement('div');
+        div.style.marginBottom = '6px';
 
         const a = document.createElement('a');
         a.href = item.link;
@@ -719,30 +739,24 @@ if (mailRefreshBtn) {
         a.style.color = '#111';
         a.style.textDecoration = 'none';
 
-        li.appendChild(a);
-        list.appendChild(li);
+        div.appendChild(a);
+        container.appendChild(div);
       });
     })
     .catch(() => {
       document.getElementById(targetId).innerHTML =
-        '<li>뉴스 로드 실패</li>';
+        '<div>뉴스 로드 실패</div>';
     });
 }
 
-// 실행
-loadNews(FUP_NEWS_API, 'news_fup');
-loadNews(WHYNOT_NEWS_API, 'news_whynot');
-    
-const FUP_NEWS_API =
-  'https://api.rss2json.com/v1/api.json?rss_url=' +
-  encodeURIComponent(
-    'https://news.google.com/rss/search?q=에프유피글로벌파트너스&hl=ko&gl=KR&ceid=KR:ko'
-  );
- const WHYNOT_NEWS_API =
-  'https://api.rss2json.com/v1/api.json?rss_url=' +
-  encodeURIComponent(
-    'https://news.google.com/rss/search?q=와이낫글로벌이니셔티브&hl=ko&gl=KR&ceid=KR:ko'
-  );
+/* =====================
+   RUN
+===================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadNews(FUP_NEWS_API, 'news_fup');
+  loadNews(WHYNOT_NEWS_API, 'news_whynot');
+});
 </script>
 </body>
 </html>
