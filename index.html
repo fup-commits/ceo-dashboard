@@ -137,6 +137,54 @@ small {
   margin-bottom: 6px;
   color: #333;
 }
+    /* =====================
+   MOBILE OPTIMIZATION
+===================== */
+@media (max-width: 768px) {
+
+  /* 전체 여백 줄이기 */
+  .container {
+    margin: 20px auto;
+    padding: 0 12px;
+  }
+
+  /* MAIL 가로 → 세로 */
+  .mail-columns {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* MAIL 버튼 터치 영역 확대 */
+  .mail-actions button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  /* GRID 전체 세로 스택 */
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* 섹션 간 간격 정리 */
+  .section {
+    margin-bottom: 16px;
+  }
+
+  /* 헤더 줄 정리 */
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  header h1 {
+    font-size: 17px;
+  }
+
+  header span {
+    font-size: 13px;
+  }
+}
 </style>
 </head>
 
