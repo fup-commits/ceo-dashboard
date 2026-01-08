@@ -303,6 +303,57 @@ footer .section {
     grid-template-columns: 1fr;
   }
 }
+    /* =====================
+   CEO DASHBOARD LAYOUT
+===================== */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.6fr 1.1fr;
+  grid-template-areas:
+    "today checklist yesterday"
+    "news  checklist calendar";
+  gap: 24px;
+  margin-top: 32px;
+}
+
+/* 영역 매핑 */
+.today { grid-area: today; }
+.checklist { grid-area: checklist; }
+.yesterday { grid-area: yesterday; }
+.news { grid-area: news; }
+.calendar-box { grid-area: calendar; }
+
+/* 높이 안정화 */
+.today,
+.news {
+  min-height: 320px;
+}
+
+.checklist {
+  min-height: 520px;
+}
+
+.yesterday {
+  min-height: 240px;
+}
+
+.calendar-box {
+  min-height: 300px;
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "today"
+      "checklist"
+      "yesterday"
+      "calendar"
+      "news";
+  }
+}
 </style>
 </head>
 
@@ -355,50 +406,45 @@ footer .section {
   </div>
 </div>
 
-<div class="grid">
-  <!-- TODAY / YESTERDAY / CALENDAR -->
-<div class="grid">
-    <!-- TODAY TASKS -->
-<div class="section">
-  <h2>TODAY TASKS</h2>
-  <div id="todayTasks"></div>
-  <input type="text" id="newTodayTask" placeholder="업무 추가 후 Enter" />
-</div>
+<!-- DASHBOARD GRID -->
+<div class="dashboard-grid">
 
-    <!-- YESTERDAY -->
-<div class="section">
-  <h2>YESTERDAY</h2>
-  <div id="yesterdayTasks" class="list"></div>
-</div>
+  <div class="section today">
+    <h2>TODAY TASKS</h2>
+    <div id="todayTasks"></div>
+    <input type="text" id="newTodayTask" placeholder="업무 추가 후 Enter" />
+  </div>
 
-<!-- CALENDAR -->
-<div class="section calendar">
+  <div class="section checklist">
+    <h2>CHECK LIST</h2>
+    <div id="checkList"></div>
+    <input type="text" id="newCheckItem" placeholder="체크 항목 추가 후 Enter" />
+  </div>
+
+  <div class="section yesterday">
+    <h2>YESTERDAY</h2>
+    <div id="yesterdayTasks" class="list"></div>
+  </div>
+
+  <div class="section news">
+    <h2>ECONOMIC NEWS</h2>
+    <div class="news">
+      • 미 연준 금리 동결<br/>
+      • 원·달러 환율 변동<br/>
+      • 글로벌 증시 혼조
+    </div>
+  </div>
+
+  <div class="section calendar-box">
     <h2>CALENDAR</h2>
     <div class="list">
-        09:00 내부 미팅<br/>
-        13:00 외부 미팅<br/>
-        16:30 전화 미팅
+      09:00 내부 미팅<br/>
+      13:00 외부 미팅<br/>
+      16:30 전화 미팅
     </div>
+  </div>
+
 </div>
-
-<footer>
-
-    <!-- CHECK LIST -->
-<div class="section">
-  <h2>CHECK LIST</h2>
-  <div id="checkList"></div>
-  <input type="text" id="newCheckItem" placeholder="체크 항목 추가 후 Enter" />
-</div>
-
-    <!-- NEWS -->
-    <div class="section">
-        <h2>ECONOMIC NEWS</h2>
-        <div class="news">
-            • 미 연준 금리 동결<br/>
-            • 원·달러 환율 변동<br/>
-            • 글로벌 증시 혼조
-        </div>
-    </div>
 
 </footer>
 
