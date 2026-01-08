@@ -396,12 +396,30 @@ function renderMail(api) {
 
         const row = document.createElement('div');
         row.style.marginBottom = '8px';
-         row.innerHTML = `
-          <strong>${fromName}${naverLabel}</strong><br/>
-          <a href="${mail.link}" target="_blank" style="color:#555; text-decoration:none;">
-             ${subject}
-          </a>
-        `;
+         const row = document.createElement('div');
+row.style.marginBottom = '8px';
+
+/* 발신자 + NAVER 라벨 */
+const strong = document.createElement('strong');
+strong.innerHTML = fromName + naverLabel;
+
+/* 줄바꿈 */
+const br = document.createElement('br');
+
+/* 메일 제목 링크 */
+const link = document.createElement('a');
+link.href = mail.link;
+link.target = '_blank';
+link.style.color = '#555';
+link.style.textDecoration = 'none';
+link.textContent = subject;
+
+/* 조립 */
+row.appendChild(strong);
+row.appendChild(br);
+row.appendChild(link);
+
+box.appendChild(row);
         box.appendChild(row);
       });
     })
