@@ -148,13 +148,10 @@ small {
 <div class="grid">
 
     <!-- MAIL -->
-    <div class="section">
-        <h2>MAIL</h2>
-        <div class="list">
-            Personal : 12<br/>
-            Company : 4
-        </div>
-    </div>
+<div class="section">
+  <h2>MAIL</h2>
+  <div id="mailList" class="list">불러오는 중…</div>
+</div>
 
     <!-- TODAY TASKS -->
 <div class="section">
@@ -320,6 +317,29 @@ function unlock() {
 if (localStorage.getItem('ceo_unlocked') === 'true') {
   document.getElementById('lockScreen').style.display = 'none';
 }
+</script>
+    <script>
+const MAIL_API = 'https://script.google.com/macros/s/AKfycbyXlpoE7c6MGH-uzEBwsTzoEVZf_GNBvJGe-gSRBk_uaZdl6TIDpglDqS6uamBQ5XAQ/exec';
+
+fetch(MAIL_API)
+  .then(res => res.json())
+  .then(data => {
+    const box = document.getElementById('mailList');
+    box.innerHTML = '';
+
+    data.forEach(mail => {
+      const row = document.createElement('div');
+      row.textContent = `- ${mail.from} | ${mail.subject} (${mail.time})`;
+      box.appendChild(row);
+    });
+
+    if (data.length === 0) {
+      box.textContent = '읽지 않은 메일 없음';
+    }
+  })
+  .catch(() => {
+    document.getElementById('mailList').textContent = '메일 로드 실패';
+  });
 </script>
 </body>
 </html>
