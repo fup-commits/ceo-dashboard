@@ -257,133 +257,24 @@ header span {
    GLOBAL
 ===================== */
 const PIN_CODE = '0925';
-const MAIL_API = 'https://script.google.com/macros/s/AKfycbyXlpoE7c6MGH-uZEbwsTzoEVZf_GNBvJ6e-gSRBk_uazd16TIDpgDqS6uamBQ5XAQ/exec';
 
 /* =====================
-   PIN UNLOCK (전역)
+   PIN UNLOCK
 ===================== */
 function unlock() {
   const input = document.getElementById('pinInput').value;
   if (input === PIN_CODE) {
     localStorage.setItem('ceo_unlocked', 'true');
     document.getElementById('lockScreen').style.display = 'none';
+    initDashboard(); // 🔥 잠금 해제 후 초기화
   } else {
     alert('PIN이 틀렸습니다.');
   }
 }
 
 /* =====================
-   MAIN
+   MAIL API
 ===================== */
-document.addEventListener('DOMContentLoaded', () => {
-
-  /* PIN 상태 확인 */
-  if (localStorage.getItem('ceo_unlocked') === 'true') {
-    document.getElementById('lockScreen').style.display = 'none';
-  }
-
-  /* 오늘 날짜 */
-  const todayISO = new Date().toISOString().slice(0, 10);
-  document.getElementById('today').innerText =
-    new Date().toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      weekday: 'short'
-    });
-
-  /* =====================
-     TODO / CHECK 공통
-  ===================== */
-  function renderList(key, containerId) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = '';
-    const items = JSON.parse(localStorage.getItem(key) || '[]');
-
-    items.forEach((item, index) => {
-      const row = document.createElement('div');
-      row.className = 'todo-item';
-
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.checked = item.done;
-
-      checkbox.onchange = () => {
-        items[index].done = checkbox.checked;
-        localStorage.setItem(key, JSON.stringify(items));
-      };
-
-      const text = document.createElement('span');
-      text.textContent = item.text;
-      if (item.done) text.style.color = '#aaa';
-
-      const del = document.createElement('span');
-      del.textContent = ' ×';
-      del.style.cursor = 'pointer';
-      del.style.color = '#ccc';
-      del.onclick = () => {
-        items.splice(index, 1);
-        localStorage.setItem(key, JSON.stringify(items));
-        renderList(key, containerId);
-      };
-
-      row.appendChild(checkbox);
-      row.appendChild(text);
-      row.appendChild(del);
-      container.appendChild(row);
-    });
-  }
-
-  /* TODAY TASKS */
-  const todayKey = 'todayTasks_' + todayISO;
-  renderList(todayKey, 'todayTasks');
-
-  document.getElementById('newTodayTask').addEventListener('keypress', e => {
-    if (e.key === 'Enter' && e.target.value.trim()) {
-      const items = JSON.parse(localStorage.getItem(todayKey) || '[]');
-      items.push({ text: e.target.value, done: false });
-      localStorage.setItem(todayKey, JSON.stringify(items));
-      e.target.value = '';
-      renderList(todayKey, 'todayTasks');
-    }
-  });
-
-  /* CHECK LIST */
-  const checkKey = 'checkList';
-  renderList(checkKey, 'checkList');
-
-  document.getElementById('newCheckItem').addEventListener('keypress', e => {
-    if (e.key === 'Enter' && e.target.value.trim()) {
-      const items = JSON.parse(localStorage.getItem(checkKey) || '[]');
-      items.push({ text: e.target.value, done: false });
-      localStorage.setItem(checkKey, JSON.stringify(items));
-      e.target.value = '';
-      renderList(checkKey, 'checkList');
-    }
-  });
-
-  /* YESTERDAY */
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayKey = 'todayTasks_' + yesterday.toISOString().slice(0, 10);
-  const yesterdayData = JSON.parse(localStorage.getItem(yesterdayKey) || '[]');
-  const yBox = document.getElementById('yesterdayTasks');
-
-  yBox.innerHTML = '';
-  if (yesterdayData.length === 0) {
-    yBox.textContent = '• 기록 없음';
-  } else {
-    yesterdayData.forEach(item => {
-      const row = document.createElement('div');
-      row.textContent = '• ' + item.text;
-      yBox.appendChild(row);
-    });
-  }
-
-/* =====================
-   MAIL LOAD (ACCOUNT BASED)
-===================== */
-
 const MAIL_APIS = {
   gmail_personal: {
     url: 'https://script.google.com/macros/s/AKfycbxPt7-RQromTNCVGjk1KW9UIf9hj6voRQEjJrlmZNy_oA3CHI03apedJWrDCbvpUU9njg/exec',
@@ -397,6 +288,8 @@ const MAIL_APIS = {
 
 function renderMail(api) {
   const box = document.getElementById(api.target);
+  if (!box) return;
+
   box.textContent = '불러오는 중…';
 
   fetch(api.url)
@@ -410,52 +303,35 @@ function renderMail(api) {
       }
 
       data.slice(0, 6).forEach(mail => {
-        // 발신자 이름 정리
         const fromName = mail.from.split('<')[0].replace(/"/g, '').trim();
-
-        // 네이버 메일 판별
         const isNaver = mail.from.includes('@naver');
-        const naverLabel = isNaver
-          ? `<span style="
-              font-size:11px;
-              color:#fff;
-              background:#2DB400;
-              padding:2px 6px;
-              margin-left:6px;
-              border-radius:4px;
-            ">NAVER</span>`
-          : '';
-
-        // 제목 정리
         const subject =
           mail.subject.length > 36
             ? mail.subject.slice(0, 36) + '…'
             : mail.subject;
 
-        // 행 컨테이너
         const row = document.createElement('div');
         row.style.marginBottom = '8px';
 
-        // 발신자
         const strong = document.createElement('strong');
-        strong.innerHTML = fromName + naverLabel;
+        strong.innerHTML =
+          fromName +
+          (isNaver
+            ? `<span style="margin-left:6px;font-size:11px;background:#2DB400;color:#fff;padding:2px 6px;border-radius:4px;">NAVER</span>`
+            : '');
 
-        // 줄바꿈
         const br = document.createElement('br');
 
-        // 메일 링크
         const link = document.createElement('a');
         link.href = mail.link;
         link.target = '_blank';
+        link.textContent = subject;
         link.style.color = '#555';
         link.style.textDecoration = 'none';
-        link.textContent = subject;
 
-        // 조립
         row.appendChild(strong);
         row.appendChild(br);
         row.appendChild(link);
-
         box.appendChild(row);
       });
     })
@@ -464,39 +340,9 @@ function renderMail(api) {
     });
 }
 
-/* PIN 해제 이후에만 메일 로드 */
-if (localStorage.getItem('ceo_unlocked') === 'true') {
-  renderMail(MAIL_APIS.gmail_personal);
-  renderMail(MAIL_APIS.gmail_company);
-    }
-});
-    // MAIL 접기 / 펼치기
-const mailToggleBtn = document.getElementById('mailToggle');
-const mailContent = document.getElementById('mailContent');
-
-let mailOpened = true;
-
-if (mailToggleBtn && mailContent) {
-  mailToggleBtn.addEventListener('click', () => {
-    mailOpened = !mailOpened;
-    mailContent.style.display = mailOpened ? 'block' : 'none';
-    mailToggleBtn.textContent = mailOpened ? '접기' : '펼치기';
-  });
-}
-
-// MAIL 새로고침
-const mailRefreshBtn = document.getElementById('mailRefresh');
-
-if (mailRefreshBtn) {
-  mailRefreshBtn.addEventListener('click', () => {
-    renderMail(MAIL_APIS.gmail_personal);
-    renderMail(MAIL_APIS.gmail_company);
-  });
-}
 /* =====================
    NEWS API
 ===================== */
-
 const FUP_NEWS_API =
   'https://api.rss2json.com/v1/api.json?rss_url=' +
   encodeURIComponent(
@@ -509,15 +355,13 @@ const WHYNOT_NEWS_API =
     'https://news.google.com/rss/search?q=와이낫글로벌이니셔티브&hl=ko&gl=KR&ceid=KR:ko'
   );
 
-/* =====================
-   NEWS LOADER
-===================== */
-
 function loadNews(apiUrl, targetId) {
+  const container = document.getElementById(targetId);
+  if (!container) return;
+
   fetch(apiUrl)
     .then(res => res.json())
     .then(data => {
-      const container = document.getElementById(targetId);
       container.innerHTML = '';
 
       if (!data.items || data.items.length === 0) {
@@ -541,40 +385,48 @@ function loadNews(apiUrl, targetId) {
       });
     })
     .catch(() => {
-      document.getElementById(targetId).innerHTML =
-        '<div>뉴스 로드 실패</div>';
+      container.innerHTML = '<div>뉴스 로드 실패</div>';
     });
 }
 
 /* =====================
-   RUN
+   DASHBOARD INIT
 ===================== */
+function initDashboard() {
+  // 날짜
+  document.getElementById('today').innerText =
+    new Date().toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      weekday: 'short'
+    });
 
-document.addEventListener('DOMContentLoaded', () => {
+  // 메일
+  renderMail(MAIL_APIS.gmail_personal);
+  renderMail(MAIL_APIS.gmail_company);
+
+  // 뉴스
   loadNews(FUP_NEWS_API, 'news_fup');
   loadNews(WHYNOT_NEWS_API, 'news_whynot');
+
+  // 뉴스 시간
+  document.getElementById('newsUpdated').innerText =
+    new Date().toLocaleTimeString('ko-KR', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+}
+
+/* =====================
+   DOM READY
+===================== */
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('ceo_unlocked') === 'true') {
+    document.getElementById('lockScreen').style.display = 'none';
+    initDashboard();
+  }
 });
-    function updateNewsTime() {
-  const now = new Date();
-  const timeText = now.toLocaleTimeString('ko-KR', {
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-  document.getElementById('newsUpdated').innerText = timeText;
-}
-
-// 최초 로드 시 시간 표시
-updateNewsTime();
-
-// 새로고침 버튼
-const newsRefreshBtn = document.getElementById('newsRefresh');
-if (newsRefreshBtn) {
-  newsRefreshBtn.addEventListener('click', () => {
-    loadNews(FUP_NEWS_API, 'news_fup');
-    loadNews(WHYNOT_NEWS_API, 'news_whynot');
-    updateNewsTime();
-  });
-}
 </script>
 </body>
 </html>
