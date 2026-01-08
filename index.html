@@ -93,10 +93,51 @@ footer {
 small {
     color: #999;
 }
+    #lockScreen {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.lock-box {
+  text-align: center;
+  border: 1px solid #e5e5e5;
+  padding: 40px;
+}
+
+.lock-box h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.lock-box input {
+  width: 160px;
+  padding: 8px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.lock-box button {
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
 </style>
 </head>
 
 <body>
+    <div id="lockScreen">
+  <div class="lock-box">
+    <h2>CEO Dashboard</h2>
+    <input type="password" id="pinInput" placeholder="PIN 입력" />
+    <button onclick="unlock()">확인</button>
+  </div>
+</div>
 <div class="container">
 
 <header>
@@ -260,6 +301,24 @@ if (yesterdayData.length === 0) {
     row.textContent = '• ' + item.text;
     yesterdayContainer.appendChild(row);
   });
+}
+</script>
+    <script>
+const PIN_CODE = '0925'; // ← 여기서 PIN 변경
+
+function unlock() {
+  const input = document.getElementById('pinInput').value;
+  if (input === PIN_CODE) {
+    localStorage.setItem('ceo_unlocked', 'true');
+    document.getElementById('lockScreen').style.display = 'none';
+  } else {
+    alert('PIN이 틀렸습니다.');
+  }
+}
+
+// 이미 인증된 경우 바로 열기
+if (localStorage.getItem('ceo_unlocked') === 'true') {
+  document.getElementById('lockScreen').style.display = 'none';
 }
 </script>
 </body>
