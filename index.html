@@ -426,14 +426,17 @@ footer .section {
     <div id="yesterdayTasks" class="list"></div>
   </div>
 
-  <div class="section news">
-    <h2>ECONOMIC NEWS</h2>
-    <div class="news">
-      • 미 연준 금리 동결<br/>
-      • 원·달러 환율 변동<br/>
-      • 글로벌 증시 혼조
-    </div>
-  </div>
+<div class="section news">
+  <h2>ECONOMIC NEWS</h2>
+
+  <strong>에프유피글로벌파트너스</strong>
+  <ul id="news_fup"></ul>
+
+  <br/>
+
+  <strong>와이낫글로벌이니셔티브</strong>
+  <ul id="news_whynot"></ul>
+</div>
 
   <div class="section calendar-box">
     <h2>CALENDAR</h2>
@@ -693,6 +696,54 @@ if (mailRefreshBtn) {
     renderMail(MAIL_APIS.gmail_company);
   });
 }
+    function loadNews(apiUrl, targetId) {
+  fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById(targetId);
+      list.innerHTML = '';
+
+      if (!data.items || data.items.length === 0) {
+        list.innerHTML = '<li>관련 뉴스 없음</li>';
+        return;
+      }
+
+      data.items.slice(0, 3).forEach(item => {
+        const li = document.createElement('li');
+        li.style.marginBottom = '6px';
+
+        const a = document.createElement('a');
+        a.href = item.link;
+        a.target = '_blank';
+        a.textContent = item.title.replace(/<[^>]*>/g, '');
+        a.style.color = '#111';
+        a.style.textDecoration = 'none';
+
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    })
+    .catch(() => {
+      document.getElementById(targetId).innerHTML =
+        '<li>뉴스 로드 실패</li>';
+    });
+}
+
+// 실행
+loadNews(FUP_NEWS_API, 'news_fup');
+loadNews(WHYNOT_NEWS_API, 'news_whynot');
+    
+    const FUP_NEWS_API =
+  'https://api.rss2json.com/v1/api.json?rss_url=' +
+  encodeURIComponent(
+    'https://newssearch.naver.com/search.naver?where=rss&query=에프유피글로벌파트너스'
+  );
+
+    const WHYNOT_NEWS_API =
+  'https://api.rss2json.com/v1/api.json?rss_url=' +
+  encodeURIComponent(
+    'https://newssearch.naver.com/search.naver?where=rss&query=와이낫글로벌이니셔티브'
+  );
 </script>
 </body>
 </html>
