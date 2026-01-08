@@ -388,25 +388,40 @@ function renderMail(api) {
       }
 
       data.slice(0, 6).forEach(mail => {
-        const from = mail.from.split('<')[0].replace(/"/g, '').trim();
+        // 발신자 이름 정리
+        const fromName = mail.from.split('<')[0].replace(/"/g, '').trim();
+
+        // 네이버 메일 판별
+        const isNaver = mail.from.includes('@naver');
+        const naverLabel = isNaver
+          ? `<span style="
+              font-size:11px;
+              color:#fff;
+              background:#2DB400;
+              padding:2px 6px;
+              margin-left:6px;
+              border-radius:4px;
+            ">NAVER</span>`
+          : '';
+
+        // 제목 정리
         const subject =
           mail.subject.length > 36
             ? mail.subject.slice(0, 36) + '…'
             : mail.subject;
 
+        // 행 컨테이너
         const row = document.createElement('div');
         row.style.marginBottom = '8px';
-         const row = document.createElement('div');
-        row.style.marginBottom = '8px';
 
-        /* 발신자 + NAVER 라벨 */
+        // 발신자
         const strong = document.createElement('strong');
         strong.innerHTML = fromName + naverLabel;
 
-        /* 줄바꿈 */
+        // 줄바꿈
         const br = document.createElement('br');
 
-    /* 메일 제목 링크 */
+        // 메일 링크
         const link = document.createElement('a');
         link.href = mail.link;
         link.target = '_blank';
@@ -414,7 +429,7 @@ function renderMail(api) {
         link.style.textDecoration = 'none';
         link.textContent = subject;
 
-        /* 조립 */
+        // 조립
         row.appendChild(strong);
         row.appendChild(br);
         row.appendChild(link);
