@@ -733,16 +733,15 @@ if (mailRefreshBtn) {
 loadNews(FUP_NEWS_API, 'news_fup');
 loadNews(WHYNOT_NEWS_API, 'news_whynot');
     
-    const FUP_NEWS_API =
+const FUP_NEWS_API =
   'https://api.rss2json.com/v1/api.json?rss_url=' +
   encodeURIComponent(
-    'https://newssearch.naver.com/search.naver?where=rss&query=에프유피글로벌파트너스'
+    'https://news.google.com/rss/search?q=에프유피글로벌파트너스&hl=ko&gl=KR&ceid=KR:ko'
   );
-
-    const WHYNOT_NEWS_API =
+ const WHYNOT_NEWS_API =
   'https://api.rss2json.com/v1/api.json?rss_url=' +
   encodeURIComponent(
-    'https://newssearch.naver.com/search.naver?where=rss&query=와이낫글로벌이니셔티브'
+    'https://news.google.com/rss/search?q=와이낫글로벌이니셔티브&hl=ko&gl=KR&ceid=KR:ko'
   );
 </script>
 </body>
